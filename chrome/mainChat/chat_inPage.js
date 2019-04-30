@@ -57,14 +57,14 @@ function markNotificationAsRead (groupID) {
     if (notifications[key]['data']['group'] && (groupID == 'party' ? notifications[key]['data']['group']['id'] == partyId : notifications[key]['data']['group']['id'] == groupID)) {
       var notificationId = notifications[key]['id'];
       var action = "notifications/" + notificationId + "/read";
-      $.ajax({
-        dataType: "json",
-        url: baseAPIUrl + action,
-        headers: apiHeaders,
-        method: 'post',
-        success: function(response) {
-          processNotifications(response.data);
-        }
+
+      fetch(baseAPIUrl + action, {
+        method: 'POST',
+        headers: apiHeaders
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        processNotifications(response.data);
       });
     }
   }
@@ -124,14 +124,14 @@ lookForApiKeys(0);
   function createGroupsBox() {
 
     var action = "groups/?type=guilds";
-    $.ajax({
-      dataType: "json",
-      url: baseAPIUrl + action,
+    fetch(baseAPIUrl + action, {
       headers: apiHeaders,
-      success: function(response) {
+    }).then(function (response) {
+      return response.json();
+    }).then(function (response) {
         var groups = response.data;
 		var notifications = response.notifications;
-		
+
         $("#chatWrapper_boxes").append("<div id='groupsBox'></div>");
         $("#groupsBox").append("<div class='hidders groupsBox_title'><div class='groupsBoxTitle_title'>Groups</div><button class='chatBox_minimizer'>—</button></div></div>");
         $("#groupsBox").append("<div class='hidders groupsBox_content'></div>");
@@ -154,7 +154,6 @@ lookForApiKeys(0);
         }
 		    if (notifications) processNotifications(notifications); //No neeed to test global notifications as this occurs on load
         if (config.hidegroups == "true") document.getElementById("groupsBox").getElementsByClassName("chatBox_minimizer")[0].click()
-      }
     });
   }
 
@@ -183,11 +182,11 @@ lookForApiKeys(0);
 
       // Populate, position and add triggers
       var action = chatBoxId.replace('groups_','groups/');
-      $.ajax({
-        dataType: "json",
-        url: baseAPIUrl + action,
+      fetch(baseAPIUrl + action, {
         headers: apiHeaders,
-        success: function(response) {
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
           var data = response.data;
           var notifications = response.notifications;
           if (notifications && notifications != globalNotifications) processNotifications(notifications);
@@ -246,7 +245,6 @@ lookForApiKeys(0);
               alert("Looks like your fame has not yet spread here! Get chatting and soon your name will be on everyone's lips.");
             }
           });
-        }
       });
       $("#"+chatBoxId+" .chatBox_shower").css('display',"none");
       $("#"+chatBoxId+" .chatBox_title").click(function() {
@@ -277,12 +275,11 @@ lookForApiKeys(0);
     var action = chatBoxId.replace('groups_','groups/') + "/chat";
     var data = "";
     if(chatIsActive) {
-      $.ajax({
-        dataType: "json",
-        url: baseAPIUrl + action,
-        data: data,
+      fetch(baseAPIUrl + action, {
         headers: apiHeaders,
-        success: function(response) {
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
           var data = response.data;
           var notifications = response.notifications;
           if (notifications && notifications != globalNotifications) processNotifications(notifications);
@@ -295,7 +292,6 @@ lookForApiKeys(0);
             grabAttentionForNewMessage(chatBoxId);
             $("#"+chatBoxId+" .chatBox_content").html(htmlChat);
           }
-        }
       });
     }
   }
@@ -570,11 +566,11 @@ lookForApiKeys(0);
   }
 
   function lookUpMember (uuid, messageID, chatClient) {
-    $.ajax({
-      dataType: "json",
-      url: baseAPIUrl + 'members/' + uuid,
+    fetch(baseAPIUrl + 'members/' + uuid, {
       headers: apiHeaders,
-      success: function (response) {
+    }).then(function (response) {
+      return response.json();
+    }).then(function (response) {
         var data = response.data;
         if (messageID && document.getElementById(messageID)) {
           var chatMessages = document.getElementsByClassName(uuid);
@@ -604,7 +600,6 @@ lookForApiKeys(0);
           document.getElementById(messageID).getElementsByClassName('msg_footer')[0].getElementsByClassName('showInfo')[0].style.cursor = "text";
           document.getElementById(messageID).getElementsByClassName('msg_footer')[0].getElementsByClassName('showInfo')[0].scrollIntoView(false);
         }
-      }
     });
     return true;
   }
@@ -644,17 +639,16 @@ lookForApiKeys(0);
 
       var action = "groups/"+gid+"/chat/"+mid+"/flag";
 
-      $.ajax({
-        dataType: "json",
-        url: baseAPIUrl + action,
-        type: "POST",
+      fetch(baseAPIUrl + action, {
         headers: apiHeaders,
-        data: {comment: userComment},
-        success: function(response) {
+        method: 'POST',
+        data: JSON.stringify({comment: userComment}),
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
           var data = response.data;
           updateChat(chatBoxId);
           $('#mid_'+mid+' .msg_footer .flagMessage').toggleClass('flagged');
-        }
       });
     }
   }
@@ -663,14 +657,13 @@ lookForApiKeys(0);
     if (config.confirmdelete == 'false' || confirm("Are you sure you want to delete this post? You cannot undo this action.")) {
       var action = "groups/"+gid+"/chat/"+mid;
 
-      $.ajax({
-        dataType: "json",
-        url: baseAPIUrl + action,
-        type: "DELETE",
+      fetch(baseAPIUrl + action, {
         headers: apiHeaders,
-        success: function() {
+        method: "DELETE",
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
           updateChat(chatBoxId);
-        }
       });
     }
   }
@@ -679,12 +672,12 @@ lookForApiKeys(0);
 
     var action = "groups/"+gid+"/chat/"+mid+"/like";
 
-    $.ajax({
-      dataType: "json",
-      url: baseAPIUrl + action,
-      type: "POST",
+    fetch(baseAPIUrl + action, {
       headers: apiHeaders,
-      success: function() {
+      method: 'POST',
+    }).then(function (response) {
+      return response.json();
+    }).then(function (response) {
         updateChat(chatBoxId);
         var $numLikes = '#mid_'+mid+' .msg_footer .likeNumberCont'; // shortcut target
         $('#mid_'+mid+' .msg_footer .likeMessage, ' + $numLikes).toggleClass('liked');
@@ -712,7 +705,6 @@ lookForApiKeys(0);
         }
 
 
-      }
     });
   }
 
@@ -728,21 +720,22 @@ lookForApiKeys(0);
       var id = chatBoxId.replace('groups_','');
       var action = "groups/"+id+"/chat";
 
-      $.ajax({
-        dataType: "json",
-        url: baseAPIUrl + action,
-        type: "POST",
-        data: sentMessage,
+      fetch(baseAPIUrl + action, {
         headers: apiHeaders,
-        success: function(response) {
+        method: 'POST',
+        body: JSON.stringify(sentMessage)
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        if (!response.success) {
+          return Promise.reject(response);
+        }
           updateChat(chatBoxId);
           $("#"+chatBoxId+" .chatBox_input textarea").focus();
           countCharacters(chatBoxId);
-        },
-        error: function () {
+      }).catch(function () {
           targetTA.val(sentMessage['message']);
           alert("Your message could not be sent. This could be for one of the following reasons:\n1. It looks like this post contains a swearword, religious oath, or reference to an addictive substance or adult topic. Habitica has users from all backgrounds, so we keep our chat very clean. Feel free to edit your message so you can post it!\n2. Your account has been banned from chat\n3. There was a network or server error");
-        }
       });
     }
   }
@@ -783,12 +776,12 @@ lookForApiKeys(0);
 
   // Hardcoded settings
   var baseAPIUrl = HABITICA_URL + "/api/v3/";
-  var refreshRateFast = 30000; //previously 5000 
+  var refreshRateFast = 30000; //previously 5000
   var refreshRateMedium = 45000;
   var refreshRateSlow = 60000;
   var refreshRateNotification = 40000;
 
-  
+
   // Settings are fetched from attributes of an HTML tag
   // called "config" with id "habitRPGChatConfig"
   // and stored in object named config
@@ -803,23 +796,24 @@ lookForApiKeys(0);
   var user_id = config['uuid'];
   var user_key = config['apik'];
   var apiHeaders = {
+    "Content-Type": "application/json",
     "x-client": "chat-extension",
     "x-api-user": user_id,
     "x-api-key": user_key
   }
 
-  
+
   //Make timeouts longer if longer than hour idle time.
   if (parseInt(config.timeoutafter) > 60) {
-	refreshRateFast =  Math.ceil(refreshRateFast * parseInt(config.timeoutafter)/60);  
-	refreshRateMedium =  Math.ceil(refreshRateMedium * parseInt(config.timeoutafter)/60);  
+	refreshRateFast =  Math.ceil(refreshRateFast * parseInt(config.timeoutafter)/60);
+	refreshRateMedium =  Math.ceil(refreshRateMedium * parseInt(config.timeoutafter)/60);
     refreshRateSlow =  Math.ceil(refreshRateSlow * parseInt(config.timeoutafter)/60);
-	refreshRateNotification =  Math.ceil(refreshRateNotification * parseInt(config.timeoutafter)/60);  
+	refreshRateNotification =  Math.ceil(refreshRateNotification * parseInt(config.timeoutafter)/60);
   }
-  
-  
-  
- 
+
+
+
+
   // Leaving the window changes refresh rate
   window.addEventListener('focus', function() {
     for (var key in intervals) {
@@ -849,43 +843,41 @@ lookForApiKeys(0);
   var userIdKeyCorrect = false
   if ((user_id.length == 36) && (user_key.length == 36)) {
 	var action = "user";
-	$.ajax({
-		dataType: "json",
-		url: baseAPIUrl + action,
-		headers: apiHeaders,
-		success: function(response) {
-		  var data = response.data;
-		  setPartyId(data['party']['_id']);
-		  setContributorTier(data['contributor']['level']);
-		  setHeroName(data['auth']['local']['username']);
-		  if (!data['party']['_id']) {
-			var groupDIVs = document.getElementsByClassName('groupsBox_content')[0].getElementsByTagName("div");
-			for (i=0;i<groupDIVs.length;i++) {
-			  if (groupDIVs[i].getAttribute('linkedid') == 'party') groupDIVs[i].style.display = 'none';
-			}       
-		  }
-		  createChatWrapper(); //Only launch group chat once party key is set.
-		  userIdKeyCorrect = true	
-		}
-	});
+    fetch(baseAPIUrl + action, {
+      headers: apiHeaders,
+    }).then(function (response) {
+      return response.json();
+    }).then(function (response) {
+      var data = response.data;
+      setPartyId(data['party']['_id']);
+      setContributorTier(data['contributor']['level']);
+      setHeroName(data['auth']['local']['username']);
+      if (!data['party']['_id']) {
+        var groupDIVs = document.getElementsByClassName('groupsBox_content')[0].getElementsByTagName("div");
+        for (i=0;i<groupDIVs.length;i++) {
+          if (groupDIVs[i].getAttribute('linkedid') == 'party') groupDIVs[i].style.display = 'none';
+        }
+      }
+      createChatWrapper(); //Only launch group chat once party key is set.
+      userIdKeyCorrect = true
+    });
   }
- 
-  //refresh notifications every refreshRateNotification seconds 
+
+  //refresh notifications every refreshRateNotification seconds
   //if no chat windows and if chat is active
   //if UserId and API Token are set.
   setInterval(function () {
-	if ((userIdKeyCorrect) && (globalNotifications) && (chatIsActive) && ($('.chatBox').length == 0)) {
-		var action = "user?userFields=achievements";
-		$.ajax({
-		  dataType: "json",
-		  url: baseAPIUrl + action,
-		  headers: apiHeaders,
-		  success: function(response) {
-			var notifications = response.notifications;
-			if (notifications && notifications != globalNotifications) processNotifications(notifications);
-		  }
-		});
-	}
+    if ((userIdKeyCorrect) && (globalNotifications) && (chatIsActive) && ($('.chatBox').length == 0)) {
+      var action = "user?userFields=achievements";
+      fetch(baseAPIUrl + action, {
+        headers: apiHeaders,
+      }).then(function (response) {
+        return response.json();
+      }).then(function (response) {
+        var notifications = response.notifications;
+        if (notifications && notifications != globalNotifications) processNotifications(notifications);
+      });
+    }
   }, refreshRateNotification);
 
 
