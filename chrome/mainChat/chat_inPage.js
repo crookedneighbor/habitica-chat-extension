@@ -19,6 +19,19 @@ var globalNotifications;
 var partyId;
 var likeDataURIs = ['data:image/png;base64,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', 'data:image/png;base64,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'];
 
+function appendElement(parentElement, attributes) {
+  var el = document.createElement('div');
+  if (attributes) {
+    Object.keys(attributes).forEach(attr => el[attr] = attributes[attr]);
+  }
+
+  parentElement.appendChild(el);
+}
+
+function toggleDisplay (el) {
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
 function setContributorTier(tierValue) {
   contributorTier = tierValue;
 }
@@ -39,7 +52,13 @@ function processNotifications (notifications) {
   globalNotifications = notifications;
   if (config.disableshownotifications == 'false') {
     var guildId;
-    $(".group-item.unreadMessages").prop('class', 'group-item');
+
+    var unreadMessages = document.querySelector(".group-item.unreadMessages")
+
+    if (unreadMessages) {
+      unreadMessages.classList.remove('unreadMessages');
+    }
+
     for (var key in notifications) {
       if (notifications[key]['data']['group'] && notifications[key]['data']['group']['id'] == partyId) {
         document.querySelector("[linkedid='party']").setAttribute('class', 'group-item unreadMessages');
@@ -92,17 +111,17 @@ function lookForApiKeys (retryCount) {
   setTimeout(function () {
     if(document.URL === "https://habitica.com/user/settings/api"
       || document.URL === HABITICA_URL + "/user/settings/api") {
-        if ($('pre.prettyprint').first().text()) {
-          $('.align-items-center button.btn-secondary').click()
+        if (document.querySelector('pre.prettyprint').innerText) {
+          document.querySelector('.align-items-center button.btn-secondary').click()
           setTimeout(function () {
             var updatedConfig = {
-              "uuid": $('pre.prettyprint').first().text(),
-              "apik": $('pre.prettyprint').last().text(),
-              "name": $('.character-name').first().text()
+              "uuid": document.querySelector('pre.prettyprint').innerText,
+              "apik": document.querySelectorAll('pre.prettyprint')[1].innerText,
+              "name": document.querySelector('.character-name').innerText
             };
             window.postMessage(updatedConfig, '*');
 
-            $('.align-items-center button.btn-secondary').click()
+            document.querySelector('.align-items-center button.btn-secondary').click()
           }, 500);
         } else {
           retryCount++;
@@ -116,8 +135,12 @@ function lookForApiKeys (retryCount) {
 lookForApiKeys(0);
 
   function createChatWrapper() {
-    $("body").append("<div id='chatWrapper'><div id='chatWrapper_boxes'></div></div>");
-    if(config['largetext'] == "true") $("#chatWrapper_boxes").addClass("largeText");
+    appendElement(document.body, {
+      id: 'chatWrapper',
+      innerHTML: "<div id='chatWrapper_boxes'></div>"
+    });
+
+    if(config['largetext'] == "true") document.querySelector("#chatWrapper_boxes").classList.add("largeText");
     createGroupsBox();
   }
 
@@ -158,7 +181,9 @@ lookForApiKeys(0);
   }
 
   function removeChatBox(chatBoxId) {
-    $("#"+chatBoxId).remove();
+    var chatBox = document.querySelector("#"+chatBoxId);
+    chatBox && chatBox.parentNode && chatBox.parentNode.removeChild(chatBox);
+
     clearInterval(intervals[chatBoxId]);
     delete intervals[chatBoxId]	;
     recalculateChatBoxPositions();
@@ -169,7 +194,7 @@ lookForApiKeys(0);
 
     if($("#"+chatBoxId).is(':visible')) {
       removeChatBox(chatBoxId);
-    } else if ($('.chatBox').length >= 5) {
+    } else if (document.querySelectorAll('.chatBox').length >= 5) {
       alert('Only 5 groups can be opened at once. Please close one of your groups before opening another one.');
     } else {
       $("#chatWrapper_boxes").append("<div class='chatBox' id='"+chatBoxId+"'></div>");
@@ -194,25 +219,25 @@ lookForApiKeys(0);
             data["chat"] = data["chat"].slice(0, config['messagecount']);
           }
 
-          $("#"+chatBoxId+" .chatBox_title").html("<div class='chatBoxTitle_title'><a href='" + (chatBoxId == 'groups_party' ? "/party" : "/groups/" + (chatBoxId == 'groups_habitrpg' ? "tavern" : "guild/"+data['_id'])) + "' target='_blank'>"+data['name']+"</a></div><button class='chatBox_closer'>×</button><button class='chatBox_minimizer'>—</button>");
+          document.querySelector("#"+chatBoxId+" .chatBox_title").innerHTML = "<div class='chatBoxTitle_title'><a href='" + (chatBoxId == 'groups_party' ? "/party" : "/groups/" + (chatBoxId == 'groups_habitrpg' ? "tavern" : "guild/"+data['_id'])) + "' target='_blank'>"+data['name']+"</a></div><button class='chatBox_closer'>×</button><button class='chatBox_minimizer'>—</button>";
           // Prevent link from minimizing window
-          $("#"+chatBoxId+" .chatBox_title .chatBoxTitle_title a").click(function(e){
-            e.stopPropagation();
+          document.querySelector("#"+chatBoxId+" .chatBox_title .chatBoxTitle_title a").addEventListener('click', function(e){
+            e.preventDefault();
           });
-          $("#"+chatBoxId+" .chatBox_input").html('<textarea id="TA_'+chatBoxId+'" placeholder="Type here..." maxlength="3000" oninput="countCharacters(\''+chatBoxId+'\')"></textarea><button onClick="sendChatMessage(\''+chatBoxId+'\')">Send<br><span class="characterCount">(<span id="charactersLeftInMessage_' + chatBoxId + '">0</span>/3k)</span></button>');
-          $("#"+chatBoxId+" .chatBox_shower").html("<div class='shower_title'>"+data['name']+"</div><button class='chatBox_closer'>×</button><button class='chatBox_minimizer'>—</button>");
-          $("#"+chatBoxId+" div .chatBox_closer").click(function() {
+          document.querySelector("#"+chatBoxId+" .chatBox_input").innerHTML = '<textarea id="TA_'+chatBoxId+'" placeholder="Type here..." maxlength="3000" oninput="countCharacters(\''+chatBoxId+'\')"></textarea><button onClick="sendChatMessage(\''+chatBoxId+'\')">Send<br><span class="characterCount">(<span id="charactersLeftInMessage_' + chatBoxId + '">0</span>/3k)</span></button>';
+          document.querySelector("#"+chatBoxId+" .chatBox_shower").innerHTML = "<div class='shower_title'>"+data['name']+"</div><button class='chatBox_closer'>×</button><button class='chatBox_minimizer'>—</button>";
+          document.querySelector("#"+chatBoxId+" div .chatBox_closer").addEventListener('click', function() {
             removeChatBox(chatBoxId);
           });
-          $("#"+chatBoxId+" .chatBox_input textarea").keyup(function(e){
+          document.querySelector("#"+chatBoxId+" .chatBox_input textarea").addEventListener('keyup', function(e){
             if (!e) e = window.event;
             var keyCode = e.keyCode || e.which;
-            if (keyCode == '13' && !e.shiftKey){ sendChatMessage($(this).parent().parent().attr('id')) }
+            if (keyCode == '13' && !e.shiftKey){ sendChatMessage(chatBoxId) }
           });
 
           // Mention navigation
-          $("#"+chatBoxId+" .chatBoxMentionNav .mentionNav_up ").click(function() {
-            var totalMentions = parseInt($("#"+chatBoxId+" .chatBox_content div").attr('totalMentions'));
+          document.querySelector("#"+chatBoxId+" .chatBoxMentionNav .mentionNav_up ").addEventListener('click', function() {
+            var totalMentions = parseInt(document.querySelector("#"+chatBoxId+" .chatBox_content div").getAttribute('totalMentions'));
             if (totalMentions > 1) {
               var currentMentionPosition = parseInt($(this).parent().attr('currentMentionPosition'));
               if(currentMentionPosition >= totalMentions) {
@@ -228,8 +253,8 @@ lookForApiKeys(0);
               alert("Looks like your fame has not yet spread here! Get chatting and soon your name will be on everyone's lips.");
             }
           });
-          $("#"+chatBoxId+" .chatBoxMentionNav .mentionNav_down ").click(function() {
-            var totalMentions = parseInt($("#"+chatBoxId+" .chatBox_content div").attr('totalMentions'));
+          document.querySelector("#"+chatBoxId+" .chatBoxMentionNav .mentionNav_down ").addEventListener('click', function() {
+            var totalMentions = parseInt(document.querySelector("#"+chatBoxId+" .chatBox_content div").getAttribute('totalMentions'));
             if (totalMentions > 1) {
               var currentMentionPosition = parseInt($(this).parent().attr('currentMentionPosition'));
               if(currentMentionPosition > totalMentions) {
@@ -246,19 +271,19 @@ lookForApiKeys(0);
             }
           });
       });
-      $("#"+chatBoxId+" .chatBox_shower").css('display',"none");
-      $("#"+chatBoxId+" .chatBox_title").click(function() {
-        $('#'+chatBoxId+' .hidders').toggle();
-        $('#'+chatBoxId+' .showers').toggle();
+      document.querySelector("#"+chatBoxId+" .chatBox_shower").style.display = "none";
+      document.querySelector("#"+chatBoxId+" .chatBox_title").addEventListener('click', function() {
+        toggleDisplay(document.querySelector('#'+chatBoxId+' .hidders'));
+        toggleDisplay(document.querySelector('#'+chatBoxId+' .showers'));
         $("#"+chatBoxId+" .chatBox_content").scrollTop($("#"+chatBoxId+" .chatBox_content")[0].scrollHeight);
         unblink(chatBoxId);
         clearInterval(intervals[chatBoxId]);
         delete intervals.chatBoxId;
         intervals[chatBoxId] = window.setInterval("updateChat('"+chatBoxId+"')", refreshRateMedium);
       });
-      $("#"+chatBoxId+" .chatBox_shower").click(function() {
-        $('#'+chatBoxId+' .hidders').toggle();
-        $('#'+chatBoxId+' .showers').toggle();
+      document.querySelector("#"+chatBoxId+" .chatBox_shower").addEventListener('click', function() {
+        toggleDisplay(document.querySelector('#'+chatBoxId+' .hidders'));
+        toggleDisplay(document.querySelector('#'+chatBoxId+' .showers'));
         $("#"+chatBoxId+" .chatBox_content").scrollTop($("#"+chatBoxId+" .chatBox_content")[0].scrollHeight);
         unblink(chatBoxId);
         clearInterval(intervals[chatBoxId]);
@@ -290,7 +315,7 @@ lookForApiKeys(0);
           if(htmlChat) {
             if (config.disablereadnotifications == 'false') markNotificationAsRead(chatBoxId.replace('groups_', ''));
             grabAttentionForNewMessage(chatBoxId);
-            $("#"+chatBoxId+" .chatBox_content").html(htmlChat);
+            document.querySelector("#"+chatBoxId+" .chatBox_content").innerHTML = htmlChat.innerHTML;
           }
       });
     }
@@ -298,10 +323,10 @@ lookForApiKeys(0);
 
   function recalculateChatBoxPositions() {
     var iterator = 0;
-    $('.group-item').removeClass('openChatBox');
-    $('.chatBox').each(function() {
-      $(this).css('right',((iterator * 350)+220)+"px");
-      $('.group-item[linkedId='+($(this).attr('id')).replace("groups_","")+']').addClass('openChatBox');
+    Array.from(document.querySelectorAll('.group-item')).forEach(group => group.classList.remove('openChatBox'));
+    Array.from(document.querySelectorAll('.chatBox')).forEach(function(chatBox) {
+      chatBox.style.right = ((iterator * 350)+220)+"px";
+      document.querySelector('.group-item[linkedId="'+chatBox.id.replace("groups_","")+'"]').classList.add('openChatBox');
       iterator++
     });
   }
@@ -309,10 +334,12 @@ lookForApiKeys(0);
   function digestChatData(chatBoxId,chatData) {
 	var monthShortName = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     var newElementId = "id"+(Math.floor(Math.random() * 10000000) + 1);
-    var html = $('<div>').attr('id',newElementId);
+    var html = document.createElement('div');
+    html.id = newElementId;
     var lastMessageIdIsSet = false;
     var lastMessageId = "";
-    var preUpdateLastMessageId = $("#"+chatBoxId+" .chatBox_content div").attr("lastMsgId");
+    var content = document.querySelector("#"+chatBoxId+" .chatBox_content div");
+    var preUpdateLastMessageId = content && content.getAttribute("lastMsgId");
     var groupID = chatBoxId.replace('groups_','');
 
     var totalMentions = 0;
@@ -488,8 +515,8 @@ lookForApiKeys(0);
       }
     }
 
-    $(html).attr("lastMsgId", lastMessageId);
-    $(html).attr("totalMentions", totalMentions);
+    html.setAttribute("lastMsgId", lastMessageId);
+    html.setAttribute("totalMentions", totalMentions);
 
     if(typeof preUpdateLastMessageId == 'undefined' || preUpdateLastMessageId != lastMessageId) {
       return html;
@@ -635,7 +662,7 @@ lookForApiKeys(0);
     if (userComment == null) {
       return false;
     }
-    if($('#mid_'+mid+' .msg_footer .flagMessage').hasClass('flagged') || confirm('Reporting a message indicates that you believe it to be in violation of the community guidelines. Are you sure you wish to report this message?')) {
+    if(document.querySelector('mid_'+mid+' .msg_footer .flagMessage').classList.contains('flagged') || confirm('Reporting a message indicates that you believe it to be in violation of the community guidelines. Are you sure you wish to report this message?')) {
 
       var action = "groups/"+gid+"/chat/"+mid+"/flag";
 
@@ -648,7 +675,7 @@ lookForApiKeys(0);
       }).then(function (response) {
           var data = response.data;
           updateChat(chatBoxId);
-          $('#mid_'+mid+' .msg_footer .flagMessage').toggleClass('flagged');
+          document.querySelector('#mid_'+mid+' .msg_footer .flagMessage').classList.toggle('flagged');
       });
     }
   }
@@ -680,28 +707,28 @@ lookForApiKeys(0);
     }).then(function (response) {
         updateChat(chatBoxId);
         var $numLikes = '#mid_'+mid+' .msg_footer .likeNumberCont'; // shortcut target
-        $('#mid_'+mid+' .msg_footer .likeMessage, ' + $numLikes).toggleClass('liked');
-        if ($('#mid_'+mid+' .msg_footer .likeMessage, ' + $numLikes).hasClass('liked')) {
-          $('#mid_'+mid+' .msg_footer .likeMessage img').prop('src', likeDataURIs[1]);
+        document.querySelector('#mid_'+mid+' .msg_footer .likeMessage, ' + $numLikes).classList.toggle('liked');
+        if (document.querySelector('#mid_'+mid+' .msg_footer .likeMessage, ' + $numLikes).classList.contains('liked')) {
+          document.querySelector('#mid_'+mid+' .msg_footer .likeMessage img').src = likeDataURIs[1];
         } else {
-          $('#mid_'+mid+' .msg_footer .likeMessage img').prop('src', likeDataURIs[0]);
+          document.querySelector('#mid_'+mid+' .msg_footer .likeMessage img').src = likeDataURIs[0];
         }
-        var numOfLikes = $($numLikes + ' .likeNumber').text(); // Get number of likes displayed
+        var numOfLikes = document.querySelector($numLikes + ' .likeNumber').innerText; // Get number of likes displayed
         if(!numOfLikes) numOfLikes = 0; // If empty string, make it zero
         numOfLikes = parseInt(numOfLikes); // Cast as an int instead of string so math will work
-        if($($numLikes).hasClass('liked')) {
+        if(document.querySelector($numLikes).classList.contains('liked')) {
           // If post is being liked by user, increase the number by one
           // Using html on the container is necessary for posts that had no
           // likes previously, so it can be given a '+'
-          $($numLikes).html(' +<span class="likeNumber">' + (numOfLikes + 1) + '</span>');
+          document.querySelector($numLikes).innerHTML = ' +<span class="likeNumber">' + (numOfLikes + 1) + '</span>';
         } else if(numOfLikes - 1 > 0) {
           // If user is removing their like, make sure that result will be
           // greater than zero, if so display the new number
-          $($numLikes + ' .likeNumber').text(numOfLikes - 1);
+          document.querySelector($numLikes + ' .likeNumber').innerText = numOfLikes - 1;
         } else {
           // If user is removing thier like and the resulting number
           // would be zero, just remove it
-          $($numLikes).text('');
+          document.querySelector($numLikes).innerText = '';
         }
 
 
@@ -710,12 +737,12 @@ lookForApiKeys(0);
 
   function sendChatMessage(chatBoxId) {
 
-    var targetTA = $('#TA_'+chatBoxId);
-    var message = targetTA.val().trim();
+    var targetTA = document.querySelector('#TA_'+chatBoxId);
+    var message = targetTA.value.trim();
 
 
     if(message) {
-      targetTA.val('');
+      targetTA.value = '';
       var sentMessage = {"message": message};
       var id = chatBoxId.replace('groups_','');
       var action = "groups/"+id+"/chat";
@@ -731,10 +758,10 @@ lookForApiKeys(0);
           return Promise.reject(response);
         }
           updateChat(chatBoxId);
-          $("#"+chatBoxId+" .chatBox_input textarea").focus();
+          document.querySelector("#"+chatBoxId+" .chatBox_input textarea").focus();
           countCharacters(chatBoxId);
       }).catch(function () {
-          targetTA.val(sentMessage['message']);
+          targetTA.value = message;
           alert("Your message could not be sent. This could be for one of the following reasons:\n1. It looks like this post contains a swearword, religious oath, or reference to an addictive substance or adult topic. Habitica has users from all backgrounds, so we keep our chat very clean. Feel free to edit your message so you can post it!\n2. Your account has been banned from chat\n3. There was a network or server error");
       });
     }
@@ -746,23 +773,35 @@ lookForApiKeys(0);
     if($("#"+chatBoxId+" .chatBox_shower").is(":visible")) {
       blink(chatBoxId);
     } else {
-      setTimeout("$('#"+chatBoxId+" .chatBox_content').scrollTop($('#"+chatBoxId+" .chatBox_content')[0].scrollHeight)",300);
+      setTimeout(function () {
+        $('#' + chatBoxId + ' .chatBox_content').scrollTop($('#' + chatBoxId + ' .chatBox_content')[0].scrollHeight);
+      }, 300);
     }
   }
 
   function blink(chatBoxId) {
     unblink(chatBoxId);
-    var intervalIn = window.setInterval("$('#"+chatBoxId+" .chatBox_shower').css('background','#a0b4d7');",1000)
-    $('#'+chatBoxId+' .chatBox_shower').attr('intervalIn',intervalIn);
-    window.setTimeout("var intervalOut = window.setInterval(\"$('#"+chatBoxId+" .chatBox_shower').css('background','#c0d4f7');\",1000);$('#"+chatBoxId+" .chatBox_shower').attr('intervalOut',intervalOut);",500);
-    $('head title').text('(New messages) Habitica | Your Life The Role Playing Game');
+    var shower = document.querySelector('#' + chatBoxId + ' .chatBox_shower');
+    var intervalIn = window.setInterval(function () {
+      shower.style.background = '#a0b4d7';
+    }, 1000)
+    shower.setAttribute('intervalIn',intervalIn);
+    window.setTimeout(function () {
+      var intervalOut = window.setInterval(function () {
+        shower.style.background = '#c0d4f7';
+      } ,1000);
+      shower.setAttribute('intervalOut', intervalOut);
+    } ,500);
+    document.querySelector('head title').innerText = '(New messages) Habitica | Your Life The Role Playing Game';
   }
 
   function unblink(chatBoxId) {
-    $('head title').text('Habitica | Your Life The Role Playing Game');
-    clearInterval($('#'+chatBoxId+' .chatBox_shower').attr('intervalIn'));
-    clearInterval($('#'+chatBoxId+' .chatBox_shower').attr('intervalOut'));
-    $('#'+chatBoxId+' .chatBox_shower').css('background','#c0d4f7');
+    document.querySelector('head title').innerText = 'Habitica | Your Life The Role Playing Game';
+    var shower = document.querySelector('#'+chatBoxId+' .chatBox_shower');
+
+    clearInterval(shower.getAttribute('intervalIn'));
+    clearInterval(shower.getAttribute('intervalOut'));
+    shower.style.background = '#c0d4f7';
   }
 
   function mention(chatBoxId, name) {
@@ -867,7 +906,7 @@ lookForApiKeys(0);
   //if no chat windows and if chat is active
   //if UserId and API Token are set.
   setInterval(function () {
-    if ((userIdKeyCorrect) && (globalNotifications) && (chatIsActive) && ($('.chatBox').length == 0)) {
+    if ((userIdKeyCorrect) && (globalNotifications) && (chatIsActive) && (document.querySelectorAll('.chatBox').length == 0)) {
       var action = "user?userFields=achievements";
       fetch(baseAPIUrl + action, {
         headers: apiHeaders,
@@ -886,22 +925,23 @@ lookForApiKeys(0);
   ///////////////////////////////////////////////////////////////////////
 
   var idleTime = 0;
-  $(document).ready(function () {
+
+  window.addEventListener('DOMContentLoaded', function () {
     //Increment the idle time counter every minute.
     var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
     //Zero the idle timer on mouse movement.
-    $(this).mousemove(function (e) {
+    window.addEventListener('mousemove', function (e) {
       if (idleTime > parseInt(config.timeoutafter)) {
         chatIsActive = true;
-        $('head title').text('Habitica - Gamify Your Life');
+        document.querySelector('head title').innerText = 'Habitica - Gamify Your Life';
         alert("Welcome back! The Habitica chat has been paused while you were away for over " + config.timeoutafter + " minutes.");
       }
       idleTime = 0;
     });
-    $(this).keypress(function (e) {
+    window.addEventListener('keypress', function (e) {
       if (idleTime > parseInt(config.timeoutafter)) {
         chatIsActive = true;
-        $('head title').text('Habitica - Gamify Your Life');
+        document.querySelector('head title').innerText = 'Habitica - Gamify Your Life';
         alert("Welcome back! The Habitica chat has been paused while you were away for over " + config.timeoutafter + " minutes.");
       }
       idleTime = 0;
@@ -912,6 +952,6 @@ lookForApiKeys(0);
     idleTime = idleTime + 1;
     if (chatIsActive == true && idleTime > parseInt(config.timeoutafter)) {
       chatIsActive = false;
-      $('head title').text('(Chat Paused) | Habitica - Gamify Your Life');
+      document.querySelector('head title').innerText = '(Chat Paused) | Habitica - Gamify Your Life';
     }
   }
